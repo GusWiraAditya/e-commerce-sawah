@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 
-class AdminProductController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,6 +16,11 @@ class AdminProductController extends Controller
      * @return response()
      */
     public function index(): View
+    {
+        $products = Product::all();
+        return view('welcome', compact('products'));
+    }
+    public function produk(): View
     {
         $products = Product::latest()->paginate(5);
 

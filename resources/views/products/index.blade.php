@@ -28,9 +28,10 @@
             @forelse ($products as $product)
                 <tr>
                     <td>{{ ++$i }}</td>
-                    <td><img src="/images/{{ $product->image }}" width="100px"></td>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->detail }}</td>
+                    <td><img src="/images/{{ $product->gambar_produk }}" width="100px"></td>
+                    <td>{{ $product->nama_praduk }}</td>
+                    <td>{{ $product->deskripsi_produk }}</td>
+                    <td>{{ $product->stok_produk }}</td>
                     <td>
                         <form action="{{ route('products.destroy',$product->id) }}" method="POST">
              
