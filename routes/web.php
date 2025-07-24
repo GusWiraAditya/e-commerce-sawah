@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserProductController;
@@ -8,13 +8,18 @@ use App\Http\Controllers\User\UserProductController;
 
 require __DIR__ . '/auth.php';
 
-Route::resource('products', [AdminProductController::class, 'index', 'create', 'store', 'show'])
+Route::resource('products', AdminProductController::class)
+    ->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']) // ✅ tambahkan edit dan update
     ->names([
         'index' => 'products.index',
         'create' => 'products.create',
         'store' => 'products.store',
-        'show' => 'products.show'
+        'show' => 'products.show',
+        'edit' => 'products.edit',    
+        'update' => 'products.update',       
+        'destroy' => 'products.destroy',
     ]);
+
 
 Route::get('/', function () {
     return view('welcome');

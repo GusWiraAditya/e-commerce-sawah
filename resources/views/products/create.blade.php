@@ -11,41 +11,67 @@
   
     <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-  
+
         <div class="mb-3">
-            <label for="inputName" class="form-label"><strong>Name:</strong></label>
+            <label for="inputNama" class="form-label"><strong>Nama Produk:</strong></label>
             <input 
                 type="text" 
-                name="name" 
-                class="form-control @error('name') is-invalid @enderror" 
-                id="inputName" 
-                placeholder="Name">
-            @error('name')
+                name="nama_produk" 
+                class="form-control @error('nama_produk') is-invalid @enderror" 
+                id="inputNama" 
+                placeholder="Nama Produk">
+            @error('nama_produk')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
   
         <div class="mb-3">
-            <label for="inputDetail" class="form-label"><strong>Detail:</strong></label>
+            <label for="inputDeskripsi" class="form-label"><strong>Deskripsi Produk:</strong></label>
             <textarea 
-                class="form-control @error('detail') is-invalid @enderror" 
+                class="form-control @error('deskripsi_produk') is-invalid @enderror" 
                 style="height:150px" 
-                name="detail" 
-                id="inputDetail" 
-                placeholder="Detail"></textarea>
-            @error('detail')
+                name="deskripsi_produk" 
+                id="inputDeskripsi" 
+                placeholder="Deskripsi Produk"></textarea>
+            @error('deskripsi_produk')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
 
         <div class="mb-3">
-            <label for="inputImage" class="form-label"><strong>Image:</strong></label>
+            <label for="inputHarga" class="form-label"><strong>Harga Produk:</strong></label>
+            <input 
+                type="number" 
+                name="harga_produk" 
+                class="form-control @error('harga_produk') is-invalid @enderror" 
+                id="inputHarga" 
+                placeholder="Harga Produk">
+            @error('harga_produk')
+                <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="inputStok" class="form-label"><strong>Stok Produk:</strong></label>
+            <input 
+                type="number" 
+                name="stok_produk" 
+                class="form-control @error('stok_produk') is-invalid @enderror" 
+                id="inputStok" 
+                placeholder="Stok Produk">
+            @error('stok_produk')
+                <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="inputGambar" class="form-label"><strong>Gambar Produk:</strong></label>
             <input 
                 type="file" 
-                name="image" 
-                class="form-control @error('image') is-invalid @enderror" 
-                id="inputImage">
-            @error('image')
+                name="gambar_produk" 
+                class="form-control @error('gambar_produk') is-invalid @enderror" 
+                id="inputGambar">
+            @error('gambar_produk')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>

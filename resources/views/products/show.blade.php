@@ -12,20 +12,32 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Name:</strong> <br/>
-                {{ $product->name }}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 mt-2">
-            <div class="form-group">
-                <strong>Details:</strong> <br/>
-                {{ $product->detail }}
+                <strong>Image:</strong><br/>
+                <img src="/images/{{ $product->gambar_produk }}" width="500px">
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Image:</strong><br/>
-                <img src="/images/{{ $product->image }}" width="500px">
+                <strong>Name:</strong> <br/>
+                {{ $product->nama_produk }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 mt-2">
+            <div class="form-group">
+                <strong>Deskripsi:</strong> <br/>
+                {{ $product->deskripsi_produk }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 mt-2">
+            <div class="form-group">
+                <strong>harga:</strong> <br/>
+                {{ $product->harga_produk }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 mt-2">
+            <div class="form-group">
+                <strong>Stok:</strong> <br/>
+                {{ $product->stok_produk }}
             </div>
         </div>
     </div>

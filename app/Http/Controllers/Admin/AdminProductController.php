@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Product;
+
+use App\Models\Produk;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use App\Http\Controllers\Controller;
 
 class AdminProductController extends Controller
 {
@@ -17,7 +19,7 @@ class AdminProductController extends Controller
      */
     public function index(): View
     {
-        $products = Product::latest()->paginate(5);
+        $products = Produk::latest()->paginate(5);
 
         return view('products.index', compact('products'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -33,55 +35,65 @@ class AdminProductController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required',
-            'detail' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'nama_produk' => 'required',
+            'deskripsi_produk' => 'required',
+            'harga_produk' => 'required|numeric',
+            'stok_produk' => 'required|integer',
+            'gambar_produk' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $input = $request->all();
+        $input['nama_produk'] = htmlspecialchars($input['nama_produk']);
+        $input['deskripsi_produk'] = htmlspecialchars($input['deskripsi_produk']);
+        
 
-        if ($image = $request->file('image')) {
+        if ($image = $request->file('gambar_produk')) {
             $destinationPath = 'images/';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
-            $input['image'] = "$profileImage";
+            $input['gambar_produk'] = $profileImage;
         }
 
-        Product::create($input);
+        Produk::create($input);
 
         return redirect()->route('products.index')
-            ->with('success', 'Product created successfully.');
+            ->with('success', 'Produk berhasil dibuat.');
     }
 
 
-    public function show(Product $product): View
+    public function show(Produk $product): View
     {
         return view('products.show', compact('product'));
     }
 
 
-    public function edit(Product $product): View
+    public function edit(Produk $product): View
     {
         return view('products.edit', compact('product'));
     }
 
 
-    public function update(Request $request, Product $product): RedirectResponse
+    public function update(Request $request, Produk $product): RedirectResponse
     {
         $request->validate([
-            'name' => 'required',
-            'detail' => 'required'
+            'nama_produk' => 'required',
+            'deskripsi_produk' => 'required',
+            'harga_produk' => 'required|numeric',
+            'stok_produk' => 'required|integer',
+            'gambar_produk' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $input = $request->all();
+        $input['nama_produk'] = htmlspecialchars($input['nama_produk']);
+        $input['deskripsi_produk'] = htmlspecialchars($input['deskripsi_produk']);
 
-        if ($image = $request->file('image')) {
+        if ($image = $request->file('gambar_produk')) {
             $destinationPath = 'images/';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
-            $input['image'] = "$profileImage";
+            $input['gambar_produk'] = "$profileImage";
         } else {
-            unset($input['image']);
+            unset($input['gambar_produk']);
         }
 
         $product->update($input);
@@ -91,11 +103,11 @@ class AdminProductController extends Controller
     }
 
 
-    public function destroy(Product $product): RedirectResponse
+    public function destroy(Produk $product): RedirectResponse
     {
         $product->delete();
 
         return redirect()->route('products.index')
-            ->with('success', 'Product deleted successfully');
+            ->with('success', 'Produk berhasil dihapus.');
     }
 }

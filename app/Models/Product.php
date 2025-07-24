@@ -8,10 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+    protected $table = 'products';
 
     protected $fillable = [
-        'name',
-        'detail',
-        'image'
+        'nama_produk',
+        'deskripsi_produk',
+        'harga_produk',
+        'gambar_produk',
+        'stok_produk',
     ];
+
+    public function getHargaProdukAttribute($value)
+    {
+        return number_format($value, 2, ',', '.');
+    }
 }
