@@ -1,13 +1,20 @@
 <?php
 
+use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\User\UserProductController;
 
 
 require __DIR__ . '/auth.php';
 
-Route::resource('products', ProductController::class);
+Route::resource('products', [AdminProductController::class, 'index', 'create', 'store', 'show'])
+    ->names([
+        'index' => 'products.index',
+        'create' => 'products.create',
+        'store' => 'products.store',
+        'show' => 'products.show'
+    ]);
 
 Route::get('/', function () {
     return view('welcome');
