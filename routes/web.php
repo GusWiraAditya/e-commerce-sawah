@@ -1,29 +1,36 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\User\UserProductController;
 
+
+ 
 
 require __DIR__ . '/auth.php';
 
-Route::resource('products', AdminProductController::class)
-    ->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']) // ✅ tambahkan edit dan update
+// Menambahkan route khusus adminproduct
+Route::get('/adminproduct', [ProductController::class, 'produk'])->name('admin.product');
+
+// Routing resource untuk produk
+Route::resource('products', ProductController::class)
+    ->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy'])
     ->names([
         'index' => 'products.index',
         'create' => 'products.create',
         'store' => 'products.store',
         'show' => 'products.show',
-        'edit' => 'products.edit',    
-        'update' => 'products.update',       
+        'edit' => 'products.edit',
+        'update' => 'products.update',
         'destroy' => 'products.destroy',
     ]);
 
 
+// Default routes
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -35,3 +42,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+require __DIR__.'/auth.php';

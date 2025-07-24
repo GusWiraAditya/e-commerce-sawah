@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 
 use App\Models\Produk;
@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
 
-class AdminProductController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,6 +18,11 @@ class AdminProductController extends Controller
      * @return response()
      */
     public function index(): View
+    {
+        $products = Produk::all();
+        return view('welcome', compact('products'));
+    }
+    public function produk(): View
     {
         $products = Produk::latest()->paginate(5);
 
