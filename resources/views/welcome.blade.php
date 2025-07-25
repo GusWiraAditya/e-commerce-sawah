@@ -1,89 +1,41 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<x-main-layout>
+    <!-- Banner Iklan -->
+    <div class="bg-gray-800">
+        <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">Koleksi Musim Panas</h1>
+            <p class="mt-6 max-w-lg mx-auto text-xl text-indigo-200">
+                Tampil gaya dengan koleksi terbaru kami. Kualitas terbaik dengan harga yang tidak akan Anda temukan di tempat lain.
+            </p>
+            <a href="{{ route('products.public.index') }}" class="mt-8 w-full inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-gray-800 bg-white hover:bg-indigo-50 sm:w-auto">
+                Belanja Sekarang
+            </a>
+        </div>
+    </div>
 
-        <title>Laravel</title>
+    <!-- Bagian Produk Terbaru -->
+    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-900">Produk Terbaru</h2>
+            <a href="{{ route('products.public.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-500">
+                Lihat Semua Produk &rarr;
+            </a>
+        </div>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-        <!-- Styles / Scripts -->
-        
-    </head>
-    <body class="flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-        <header class="px-10 flex justify-between w-full text-sm shadow-md p-6 rounded-md top-0">
-            <div class="flex items-center justify-between ">
-                <p class="text-2xl font-mono">UMKM</p>
-            </div>
-            @if (Route::has('login'))
-                <nav class="flex items-center justify-end gap-4">
-                    @auth
-                        <a
-                            href="{{ url('/dashboard') }}"
-                            class="inline-block px-5 py-1.5 text-black border-[#19140035] hover:border-[#1915014a] border  dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal"
-                        >
-                            Dashboard
-                        </a>
-                    @else
-                        <a
-                            href="{{ route('login') }}"
-                            class="inline-block px-5 py-1.5 text-[#1b1b18] border border-transparent hover:scale-200 hover:border-black 
-                            rounded-md text-sm leading-normal transition-all duration-300"
-                        >
-                            Log in
-                        </a>
-
-                        @if (Route::has('register'))
-                            <a
-                                href="{{ route('register') }}"
-                                class="inline-block px-5 py-1.5 text-[#1b1b18] border border-transparent hover:scale-200 hover:border-black 
-                                rounded-md text-sm leading-normal transition-all duration-300">
-                                Register
-                            </a>
-                        @endif
-                    @endauth
-                </nav>
-            @endif
-        </header>
-            <main class="flex items-center justify-center rounded-lg border-white border-2">
-                <div class="flex flex-col ">
-                <!-- Content -->
-                    <div style="background-image: url('/images/gs.jpeg');" class="rounded-xl bg-cover w-auto min-h-auto flex flex-col text-center text-white py-12 px-12 my-20">
-                            <h1 class="text-4xl font-bold text-center">Welcome to UMKM E-Commerce</h1>
-                            <p class="mt-4 text-center text-lg">Your one-stop solution for all your e-commerce needs.</p>
+        <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+            @forelse ($latestProducts as $product)
+                {{-- Kartu produk yang sama seperti sebelumnya --}}
+                <a href="{{ route('products.public.show', $product) }}" class="group block overflow-hidden rounded-xl bg-white shadow-lg transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-2xl">
+                    <div class="relative">
+                        <img src="{{ asset('images/' . $product->gambar_produk) }}" alt="Gambar produk {{ $product->nama_produk }}" class="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105" onerror="this.onerror=null;this.src='https://placehold.co/400x400/e2e8f0/4a5568?text=Gambar+Rusak';">
                     </div>
-                <!-- Produk Content -->
-                <div class="flex flex-wrap gap-7 max-w-5xl justify-center ">
-                    @foreach ($products as $p )
-                        <div class="border-2 rounded-xl border-gray-100 max-w-auto h-auto hover:scale-105 hover:shadow-md  transition-transform duration-300 ">
-                        <!-- Image -->
-                            <div class="p-4">
-                                <img src={{ asset('images/'.$p->gambar_produk) }} alt="gambar produk" />
-                            </div>
-                        <!-- Price -->
-                            <div class="text-4xl p-4"> 
-                                <h1>Rp{{ $p->harga_produk }}</h1>
-                            </div>
-                        <!-- description -->
-                            <div class ="p-4">
-                                <h2 class="text-2xl">{{$p->nama_produk}}</h2>
-                                <p>{{$p->deskripsi_produk}}</p>
-                            </div>
-                        <!-- Button -->
-                            <div class="p-4 flex justify-end ">
-                                <button class="p-2 w-20 rounded-md border-2 border-gray-300 hover:bg-blue-500 hover:text-white hover:border-none transition-color duration-300">Buy</button>
-                            </div>
-                        </div>
-                            @endforeach   
-                        </div>
-                </div>   
-            </main>
-        @if (Route::has('login'))
-            <div class="h-14.5 hidden lg:block"></div>
-        @endif
-    </body>
-</html>
+                    <div class="p-4">
+                        <h3 class="mt-1 truncate text-md font-semibold text-gray-800" title="{{ $product->nama_produk }}">{{ $product->nama_produk }}</h3>
+                        <p class="mt-2 text-lg font-bold text-blue-600">Rp {{$product->harga_produk}}</p>
+                    </div>
+                </a>
+            @empty
+                <p class="col-span-full text-center text-gray-500">Belum ada produk untuk ditampilkan.</p>
+            @endforelse
+        </div>
+    </div>
+</x-main-layout>
